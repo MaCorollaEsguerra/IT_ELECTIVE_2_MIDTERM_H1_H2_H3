@@ -1,0 +1,44 @@
+﻿@model List<WebApplication1.Models.Product>
+
+<h1>Tech Hardware Store</h1>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Stock Quantity</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr class="@(product.StockQuantity == 0 ? "table-secondary" : "")">
+                <td>@product.Name</td>
+
+                <td>
+                    ₱@product.Price.ToString("N2")
+                </td>
+
+                <td>@product.StockQuantity</td>
+
+                <td>
+                    @if (product.StockQuantity == 0)
+                    {
+                        <span class="badge bg-danger">
+                            Out of Stock
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success">
+                            Available
+                        </span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
