@@ -1,0 +1,32 @@
+﻿@model WebApplication1.Models.DTOs.CheckoutFormDTO
+
+<h1>Checkout</h1>
+
+<form asp-action="Process" method="post">
+
+    <div class="mb-3">
+        <label>Customer Name</label>
+
+        <input asp-for="CustomerName"
+               class="form-control" />
+
+        <span asp-validation-for="CustomerName"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Email (Optional)</label>
+
+        <input asp-for="CustomerEmail"
+               class="form-control" />
+
+        <span asp-validation-for="CustomerEmail"
+              class="text-danger"></span>
+    </div>
+
+    <button type="submit"
+            class="btn btn-success">
+        Complete Payment
+    </button>
+
+</form>

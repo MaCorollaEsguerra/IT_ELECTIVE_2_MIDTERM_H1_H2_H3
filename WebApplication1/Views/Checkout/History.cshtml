@@ -1,0 +1,40 @@
+﻿@model List<WebApplication1.Models.Transaction>
+
+<h1>Transaction History</h1>
+
+@if (!Model.Any())
+{
+    <p>No transactions found.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Transaction ID</th>
+                <th>Date</th>
+                <th>Customer Name</th>
+                <th>Total Amount</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var transaction in Model)
+            {
+                <tr>
+                    <td>@transaction.TransactionId</td>
+                    <td>@transaction.Date</td>
+                    <td>@transaction.CustomerName</td>
+                    <td>₱@transaction.TotalAmount.ToString("N2")</td>
+                    <td>
+                        <a asp-action="Details"
+                           asp-route-id="@transaction.TransactionId">
+                            View
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

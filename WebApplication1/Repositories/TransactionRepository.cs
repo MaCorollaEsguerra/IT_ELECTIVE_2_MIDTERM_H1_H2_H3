@@ -1,6 +1,9 @@
-﻿namespace WebApplication1.Repositories
+﻿using WebApplication1.Models;
+
+namespace WebApplication1.Repositories
 {
-    public class TransactionRepository
+    public static class TransactionRepository
     {
+        public static List<Transaction> Transactions { get; set; } = new();
     }
 }

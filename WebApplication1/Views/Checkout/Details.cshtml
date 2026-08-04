@@ -1,0 +1,56 @@
+﻿@model WebApplication1.Models.Transaction
+
+<h1>Transaction Details</h1>
+
+<p>
+    <strong>Transaction ID:</strong>
+    @Model.TransactionId
+</p>
+
+<p>
+    <strong>Date:</strong>
+    @Model.Date
+</p>
+
+<p>
+    <strong>Customer:</strong>
+    @Model.CustomerName
+</p>
+
+<p>
+    <strong>Email:</strong>
+    @Model.CustomerEmail
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.PurchasedItems)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.Quantity</td>
+                <td>₱@item.UnitPrice.ToString("N2")</td>
+                <td>₱@item.LineTotal.ToString("N2")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>
+    Total Amount: ₱@Model.TotalAmount.ToString("N2")
+</h3>
+
+<a asp-controller="Checkout"
+   asp-action="History"
+   class="btn btn-secondary">
+    Back
+</a>
