@@ -61,5 +61,50 @@ namespace WebApplication1.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public IActionResult Update(UpdateCartDTO dto)
+        {
+            var cartItem = CartRepository.Cart.Items
+                .FirstOrDefault(i => i.ProductId == dto.ProductId);
+
+            var product = ProductRepository.Products
+                .FirstOrDefault(p => p.Id == dto.ProductId);
+
+            if (cartItem == null || product == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            if (dto.Quantity <= 0)
+            {
+                TempData["Error"] = "Quantity must be at least 1.";
+                return RedirectToAction("Index");
+            }
+
+            if (dto.Quantity > product.StockQuantity)
+            {
+                TempData["Error"] = "Quantity exceeds available stock.";
+                return RedirectToAction("Index");
+            }
+
+            cartItem.Quantity = dto.Quantity;
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Remove(int productId)
+        {
+            var item = CartRepository.Cart.Items
+                .FirstOrDefault(i => i.ProductId == productId);
+
+            if (item != null)
+            {
+                CartRepository.Cart.Items.Remove(item);
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }
