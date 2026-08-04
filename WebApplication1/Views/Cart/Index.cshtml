@@ -1,0 +1,42 @@
+﻿@model WebApplication1.Models.ShoppingCart
+
+<h1>Shopping Cart</h1>
+
+@if (!Model.Items.Any())
+{
+    <p>Cart is empty.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Line Total</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.Quantity</td>
+                    <td>₱@item.UnitPrice.ToString("N2")</td>
+                    <td>₱@item.LineTotal.ToString("N2")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>
+        Grand Total: ₱@Model.GrandTotal.ToString("N2")
+    </h3>
+}
+
+<a asp-controller="Products"
+   asp-action="Index">
+    Continue Shopping
+</a>

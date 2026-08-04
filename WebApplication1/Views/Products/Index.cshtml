@@ -2,13 +2,21 @@
 
 <h1>Tech Hardware Store</h1>
 
-<table class="table table-bordered table-striped">
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+<table class="table table-bordered">
     <thead>
         <tr>
             <th>Name</th>
             <th>Price</th>
-            <th>Stock Quantity</th>
+            <th>Stock</th>
             <th>Status</th>
+            <th>Add To Cart</th>
         </tr>
     </thead>
 
@@ -16,11 +24,10 @@
         @foreach (var product in Model)
         {
             <tr class="@(product.StockQuantity == 0 ? "table-secondary" : "")">
+
                 <td>@product.Name</td>
 
-                <td>
-                    ₱@product.Price.ToString("N2")
-                </td>
+                <td>₱@product.Price.ToString("N2")</td>
 
                 <td>@product.StockQuantity</td>
 
@@ -38,7 +45,38 @@
                         </span>
                     }
                 </td>
+
+                <td>
+                    @if (product.StockQuantity > 0)
+                    {
+                        <form asp-controller="Cart" asp-action="Add" method="post">
+                            <input type="hidden"
+                                   name="ProductId"
+                                   value="@product.Id" />
+
+                            <input type="number"
+                                   name="Quantity"
+                                   value="1"
+                                   min="1"
+                                   class="form-control mb-2" />
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+                                Add To Cart
+                            </button>
+                        </form>
+                    }
+                </td>
+
             </tr>
         }
     </tbody>
 </table>
+
+<a asp-action="Index" asp-controller="Home" class="btn btn-secondary">
+    Index
+</a>
+
+<a asp-controller="Cart" asp-action="Index" class="btn btn-success">
+    View Cart
+</a>
